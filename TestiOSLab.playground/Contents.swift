@@ -1,169 +1,203 @@
+//--------------------------------Classwork 1.1--------------------------------------------------------
+//: Playground - noun: a place where people can play
 
-//--------------------------------Homework 2.2--------------------------------------------------------
-
-//import Cocoa
 import Foundation
-
-
-
-class Unit {
+func insertionSort(_ array:[Int]) -> [Int] {
     
-    var health:Int
-    var damage:Int
-    var protection:Int
-    var dexterity:Int
-    var speed:Int
-    private var name:String
+    var mutableArray = array
     
-    func getName() -> String {
-        return self.name
-    }
-    
-    init(health:Int, damage:Int, protection:Int, dexterity:Int, speed:Int, name:String) {
-        self.health = health
-        self.damage = damage
-        self.protection = protection
-        self.dexterity = dexterity
-        self.speed = speed
-        self.name = name
-    }
-    
-    
-    func Attack(to enemy:Unit) {
-        let rand = Int(arc4random_uniform(100))
-        if rand > enemy.dexterity {
-            enemy.health = enemy.health - self.damage * (1 - enemy.protection / 100)
-        }
-    }
-}
-
-class Magician:Unit {
-    
-}
-
-class Assasin:Unit {
-    
-}
-
-class Knight:Unit {
-    
-}
-
-class Battlefield {
-    
-    func findCountOfHealthyFighters(arr:[Unit]) -> Int {
-        var countOfHealthyFighters = 0
-        for fighters in arr {
-            if fighters.health > 0 { countOfHealthyFighters = countOfHealthyFighters + 1 }
-        }
-        return countOfHealthyFighters
-    }
-    
-    
-    
-    func beginBattle(array:[Unit]) {
+    if array.count == 1 || array.count == 0 {
         
-        var arr = array
-        let countOfHealthyFighters = findCountOfHealthyFighters(arr: arr)
+        return mutableArray
         
-        while countOfHealthyFighters > 0 {
+    } else {
+        
+        for i in 0 ..< mutableArray.count {
             
-            var arr2:[Unit] = []
-            print("_________________")
-            print("Begin")
-            print("_________________")
-            var count:Int = 0
-            var index:Int = -1
-            var smbIndex = 0 //индекс борцов с health > 0
+            let value = mutableArray[i]
+            var j = i
             
-            for smb in arr {
-                index = index + 1
-                if smb.health > 0 {
-                    count = count+1
-                    smbIndex = index
-                    arr2.append(arr[smbIndex]) //массив борцов с health > 0
-                }
+            while j > 0 && mutableArray[j - 1] > value{
+                mutableArray[j] = mutableArray[j - 1]
+                j = j-1
             }
-            
-            if count == 1 {
-                print("The winner is ", arr[smbIndex].getName())
-                print("Participants: ")
-                var count:Int = 0
-                for k in array {
-                    count = count+1
-                    print(count, "–", k.getName())
-                }
-                break
-            } else {
-                var currentSpeed = 0
-                var currentIndex = -1
-                var smbdIndex = 0 // индекс борца с большей скоростью, он будет наносить урон
-                
-                for smbd in arr2 {
-                    
-                    smbd.speed = smbd.speed + Int(arc4random_uniform(5))
-                    currentIndex = currentIndex + 1
-                    if smbd.health <= 0 {
-                        arr2.remove(at: currentIndex)
-                    } else {
-                        
-                        if smbd.speed > currentSpeed && smbd.health > 0 {
-                            currentSpeed = smbd.speed
-                            smbdIndex = currentIndex
-                        }
-                    }
-                    
-                }
-                
-                
-                var i = Int(arc4random_uniform(UInt32(arr2.count))) //индекс рандомного борца из массива борцов с health > 0
-                
-                while i == smbdIndex { i = Int(arc4random_uniform(UInt32(arr2.count))) }
-                
-                if i != smbdIndex {
-                    arr[smbdIndex].Attack(to: arr2[i])
-                    print(arr2[i].health)
-                    print(arr[smbdIndex])
-                    print(arr2[i])
-                    if arr2[i].health <= 0 { arr.remove(at: i) }
-                }
-            }
+            mutableArray[j] = value
+            //print(mutableArray)
         }
     }
-    
+    return mutableArray
 }
 
-let mag = Magician(health: 100, damage: 20, protection: 30, dexterity: 40, speed: 1, name: "Mag")
-let assasin = Assasin(health: 100, damage: 40, protection: 30, dexterity: 60, speed:2, name: "As")
-let knight = Knight(health: 100, damage: 30, protection: 30, dexterity: 50, speed:3, name: "Kn")
-let arr = [mag, assasin, knight]
-let battle = Battlefield()
-battle.beginBattle(array: arr)
+let list = [4, 24, 6, 2, 0, 7, 29]
+insertionSort(list)
 
 
-//--------------------------------Homework 2.1--------------------------------------------------------
-
-
+//--------------------------------Classwork 1.2--------------------------------------------------------
 
 
 //: Playground - noun: a place where people can play
 
+//import Cocoa
 
-func mytrim(_ word: String, letter: String) -> String {
-    var cur: String = ""
-    for index in 0 ..< word.count {
-        let i = word.index(word.startIndex, offsetBy: index)
-        let current = String(word[i])
-        if current != letter {
-            cur += current
-            //print(current)
-            //print(cur)
-        }
+class People {
+    
+    var name:String
+    private var lastName:String
+    private var age:Int
+    
+    
+    init(name:String, lastName:String, age:Int) {
+        self.name = name
+        self.lastName = lastName
+        self.age = age
     }
-    return cur
+    
+    func saySomething() {
+        print("Hello. I'm ", age)
+    }
+    
 }
 
-//mytrim("Hello world", letter: "o")
-print(mytrim("Hello world", letter: "o"))
-print(mytrim("asdfasasdfs", letter: "a"))
+class Ann:People {
+    
+    override func saySomething() {
+        print(super.saySomething(), "I'm student")
+    }
+}
+
+class Joe:People {
+    override func saySomething() {
+        print(super.saySomething(), "I'm employee")
+    }
+}
+
+class Marse:People {
+    override func saySomething() {
+        print(super.saySomething(), "I'm kid")
+    }
+}
+
+let ann = Ann(name: "Ann", lastName: "Smit", age: 18)
+let joe = Joe(name: "Joe", lastName: "Marsh", age: 29)
+let marse = Marse(name: "Marse", lastName: "Lin", age: 19)
+
+var array = [ann, joe, marse]
+
+for i in array{
+    print(i.saySomething(), "And my name is " + i.name)
+}
+
+
+
+
+//--------------------------------Classwork 1.3--------------------------------------------------------
+
+
+//: Playground - noun: a place where people can play
+
+//import Cocoa
+
+class BinaryTree{
+    
+    var root:Node? = nil
+    
+    func add(value:Any) {
+        let element = Node.init(parent: nil, left: nil, right: nil, value: value)
+        if self.root == nil {
+            self.root = element
+        } else {
+            var newel = self.root
+            while newel != nil {
+                if compareTwoAny(a: newel?.value as Any, b: value) {
+                    if newel?.left != nil {
+                        newel = newel?.left
+                    } else {
+                        element.parent = newel
+                        newel?.left = element
+                        newel = newel?.left
+                        break
+                    }
+                    
+                } else {
+                    if newel?.right != nil {
+                        newel = newel?.right
+                    } else {
+                        element.parent = newel
+                        newel?.right = element
+                        newel = newel?.right
+                        break
+                    }
+                    
+                }
+            }
+            
+            while newel?.parent != nil {
+                newel = newel?.parent
+            }
+            self.root = newel
+        }
+    }
+    
+    
+    func search(value:Any) -> Node {
+        var node:Node? = self.root
+        while ObjectIdentifier(node?.value as AnyObject) != ObjectIdentifier(value as AnyObject) {
+            if ObjectIdentifier(node?.value as AnyObject) > ObjectIdentifier(value as AnyObject) {
+                node = node?.left
+            } else {
+                node = node?.right
+            }
+        }
+        return node!
+    }
+    
+}
+
+
+func compareTwoAny(a: Any, b: Any) -> Bool {
+    return ObjectIdentifier(a as AnyObject) > ObjectIdentifier(b as AnyObject)
+}
+
+
+class Node {
+    
+    var parent:Node?
+    var left:Node?
+    var right:Node?
+    var value:Any?
+    
+    init(parent:Node?, left:Node?, right:Node?, value:Any?) {
+        
+        self.parent = parent
+        self.left = left
+        self.right = right
+        self.value = value
+    }
+}
+
+
+
+
+
+var tree = BinaryTree()
+tree.add(value: 5)
+tree.add(value: 7)
+tree.add(value: 3)
+tree.add(value: 2)
+tree.add(value: 8)
+print(tree.root?.value as Any)
+print(tree.root?.right?.value)
+print(tree.root?.left?.value)
+print(tree.root?.right?.right?.value)
+print(tree.root?.left?.left?.value)
+
+print("______")
+
+print(tree.search(value: 2))
+print(tree.root?.left?.left)
+
+
+
+
+
 
