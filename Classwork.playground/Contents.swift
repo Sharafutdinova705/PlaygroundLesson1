@@ -1,7 +1,7 @@
 //--------------------------------Classwork 1.1--------------------------------------------------------
 //: Playground - noun: a place where people can play
 
-import Foundation
+import Cocoa
 func insertionSort(_ array:[Int]) -> [Int] {
     
     var mutableArray = array
@@ -14,7 +14,7 @@ func insertionSort(_ array:[Int]) -> [Int] {
         
         for i in 0 ..< mutableArray.count {
             
-            let value = mutableArray[i]
+            var value = mutableArray[i]
             var j = i
             
             while j > 0 && mutableArray[j - 1] > value{
@@ -30,13 +30,14 @@ func insertionSort(_ array:[Int]) -> [Int] {
 
 let list = [4, 24, 6, 2, 0, 7, 29]
 insertionSort(list)
-//
+
+
 //--------------------------------Classwork 1.2--------------------------------------------------------
 
 
 //: Playground - noun: a place where people can play
 
-//import Cocoa
+import Cocoa
 
 class People {
     
